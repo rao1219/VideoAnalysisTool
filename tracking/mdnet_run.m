@@ -1,4 +1,4 @@
-function [ result ] = mdnet_run(images, region, net, display)
+function [ result ] = mdnet_run(handles,images, region, net, display)
 % MDNET_RUN
 % Main interface for MDNet tracker
 %
@@ -13,11 +13,12 @@ function [ result ] = mdnet_run(images, region, net, display)
 %
 % Hyeonseob Nam, 2015
 % 
-
-if(nargin<4), display = true; end
+set(handles.edit3,'String','Initialization...');
+if(nargin<5), display = true; end
 
 %% Initialization
-fprintf('Initialization...\n');
+%fprintf('Initialization...\n');
+
 
 nFrames = length(images);
 
@@ -44,7 +45,8 @@ if(opts.bbreg)
 end
 
 %% Extract training examples
-fprintf('  extract features...\n');
+% fprintf('  extract features...\n');
+set(handles.edit3,'String','extract features...\n');
 
 % draw positive/negative samples
 pos_examples = gen_samples('gaussian', targetLoc, opts.nPos_init*2, opts, 0.1, 5);
@@ -69,13 +71,15 @@ neg_data = feat_conv(:,:,:,neg_idx);
 
 
 %% Learning CNN
-fprintf('  training cnn...\n');
+% fprintf('  training cnn...\n');
+set(handles.edit3,'String',' training cnn...');
 net_fc = mdnet_finetune_hnm(net_fc,pos_data,neg_data,opts,...
     'maxiter',opts.maxiter_init,'learningRate',opts.learningRate_init);
 
 %% Initialize displayots
 if display
-    figure(2);
+    %figure(2);
+    axes(handles.axes_1);
     set(gcf,'Position',[200 100 600 400],'MenuBar','none','ToolBar','none');
     
     hd = imshow(img,'initialmagnification','fit'); hold on;
@@ -110,8 +114,10 @@ scale_f = opts.scale_f;
 
 %% Main loop
 for To = 2:nFrames;
-    fprintf('Processing frame %d/%d... ', To, nFrames);
-    
+    %fprintf('Processing frame %d/%d... ', To, nFrames);
+    msg = 'Processing frame ';
+    msg = [msg, int2str(To), int2str(nFrames),'...'];
+    set(handles.edit3,'String',msg);
     img = imread(images{To});
     if(size(img,3)==1), img = cat(3,img,img,img); end
     
@@ -194,10 +200,14 @@ for To = 2:nFrames;
     end
     
     spf = toc(spf);
-    fprintf('%f seconds\n',spf);
+  %  fprintf('%f seconds\n',spf);
+  msg = [msg, int2str(spf),' seconds'];
+  set(handles.edit3,'String',msg);
+  
     
     %% Display
     if display
+        axes(handles.axes_1);
         hc = get(gca, 'Children'); delete(hc(1:end-1));
         set(hd,'cdata',img); hold on;
         

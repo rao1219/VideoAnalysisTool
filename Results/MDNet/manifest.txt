@@ -1,0 +1,9 @@
+toolkit.version=3.0
+tracker.identifier=MDNet
+tracker.protocol=file
+timestamp=2015-10-12 15:52:53
+platform=GLNXA64
+platform.maxsize=281474976710655.000000
+platform.endian=L
+environment=matlab
+environment.version=7.14.0.739 (R2012a)
