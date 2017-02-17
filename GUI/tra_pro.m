@@ -1,5 +1,5 @@
 function [] = tra_pro(handles)
-set(handles.edit3,'String','Initialization...');
+%set(handles.edit3,'String','Initialization...');
  conf = genConfig('otb','Diving');
 %conf = genConfig('vot2015','ball1');
 
@@ -11,7 +11,7 @@ switch(conf.dataset)
     case 'vot2015'
         net = fullfile('models','mdnet_otb-vot15.mat');
 end
-
-result = mdnet_run(handles,conf.imgList, conf.gt(1,:), net);
-
+%result = mdnet_run(handles,conf.imgList, conf.gt(1,:), net,false);
+%result = run_test(handles,conf.imgList, conf.gt(1,:),net,true);
+run_test_draw(handles);
 end
