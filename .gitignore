@@ -2,6 +2,8 @@
 dataset_link
 dataset/download_datasets.m
 dataset/OTB/seq_list.txt
+dataset
+Tracker/Videos/
 
 models/data_vot-otb/*
 models/data_otb-vot14/*

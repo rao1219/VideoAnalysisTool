@@ -22,7 +22,7 @@ function varargout = ui(varargin)
 
 % Edit the above text to modify the response to help ui
 
-% Last Modified by GUIDE v2.5 18-Feb-2017 16:15:42
+% Last Modified by GUIDE v2.5 18-Feb-2017 22:32:13
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -65,7 +65,7 @@ axes(handles.axes_1);
 imshow(img);
 axes(handles.axes_2);
 imshow(img);
-
+datacursormode on;
 
 
 % --- Outputs from this function are returned to the command line.
@@ -101,6 +101,21 @@ function UploadBtn_Callback(hObject, eventdata, handles)
  set(handles.slider1,'Max',frame_num);
  set(handles.slider2,'Max',frame_num);
  set(handles.slider1,'Value',0.01);
+ cd Videos
+ f = regexp(file,'\.','split');
+ f_ =  char(f(1));
+ mkdir(f_);
+ cd(f_);
+ handles.imgs = {};
+ for i=1:frame_num
+     frame = read(video_raw,i);
+     imwrite(frame,[num2str(i),'.jpg']);
+     full_path_file = fullfile('Videos',f_,[num2str(i),'.jpg']);
+     handles.imgs = [handles.imgs, full_path_file];
+ end
+ handles.video_dir = pwd;
+ guidata(hObject,handles);
+ cd ../../;
  
 
 % --------------------------------------------------------------------
@@ -246,7 +261,11 @@ function processBtn_Callback(hObject, eventdata, handles)
 % hObject    handle to processBtn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-
+%imglist = parseImg(handles.video_dir);
+imglist = handles.imgs;
+region = handles.region;
+net = fullfile('models','mdnet_otb-vot15.mat');
+result = run_test(handles,imglist, region, net, true);
 
 
 
@@ -561,5 +580,22 @@ buttom_left_y = str2num(get(handles.b_p_y,'String'));
 weight = buttom_left_x - top_left_x;
 height = buttom_left_y - top_left_y;
 axes(handles.axes_1);
-rectangle('Position',[top_left_x,top_left_y,weight,height],'EdgeColor', [1 0 0], 'Linewidth', 3);
+region = [top_left_x,top_left_y,weight,height];
+handles.region = region;
+guidata(hObject,handles);
+rectangle('Position',region,'EdgeColor', [1 0 0], 'Linewidth', 3);
+
+
+% --------------------------------------------------------------------
+function Untitled_10_Callback(hObject, eventdata, handles)
+% hObject    handle to Untitled_10 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+dir = uigetdir;
+handles.imgs = parseImg(dir);
+set(handles.filename,'String',dir);
+first_f = imread(handles.imgs{1});
+axes(handles.axes_1);
+imshow(first_f);
+guidata(hObject,handles);
 

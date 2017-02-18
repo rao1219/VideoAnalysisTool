@@ -220,6 +220,7 @@ for To = 2:nFrames;
         %set(gca,'position',[0 0 1 1]);
         
         text(10,10,num2str(To),'Color','y', 'HorizontalAlignment', 'left', 'FontWeight','bold', 'FontSize', 30); 
+        set(handles.slider2,'Value',To);
         hold off;
         drawnow;
     end
