@@ -12,6 +12,6 @@ switch(conf.dataset)
         net = fullfile('models','mdnet_otb-vot15.mat');
 end
 %result = mdnet_run(handles,conf.imgList, conf.gt(1,:), net,false);
-%result = run_test(handles,conf.imgList, conf.gt(1,:),net,true);
-run_test_draw(handles);
+result = run_test(handles,conf.imgList, conf.gt(1,:),net,true);
+%run_test_draw(handles);
 end

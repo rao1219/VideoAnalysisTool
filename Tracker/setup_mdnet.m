@@ -15,4 +15,5 @@ addpath('pretraining');
 addpath('tracking');
 addpath('utils');
 addpath('../GUI');
+addpath('Run_Test');
 

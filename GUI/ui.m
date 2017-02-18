@@ -22,7 +22,7 @@ function varargout = ui(varargin)
 
 % Edit the above text to modify the response to help ui
 
-% Last Modified by GUIDE v2.5 16-Feb-2017 18:09:06
+% Last Modified by GUIDE v2.5 18-Feb-2017 16:15:42
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -247,7 +247,6 @@ function processBtn_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
-tra_pro(handles)
 
 
 
@@ -281,11 +280,13 @@ function function_menu_Callback(hObject, eventdata, handles)
 
 
 % --------------------------------------------------------------------
-function tracking_item_Callback(hObject, eventdata, handles)
-% hObject    handle to tracking_item (see GCBO)
+function demo_tracking_Callback(hObject, eventdata, handles)
+% hObject    handle to demo_tracking (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
-set(handles.edit3,'String','Tracking');
+set(handles.edit3,'String','Demo tracking');
+pause(0.2);
+tra_pro(handles)
 
 
 % --------------------------------------------------------------------
@@ -425,3 +426,140 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton5 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes on button press in set_posA_btn.
+function set_posA_btn_Callback(hObject, eventdata, handles)
+% hObject    handle to set_posA_btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+datacursormode on
+dcm_obj = datacursormode(handles.figure1);
+info = getCursorInfo(dcm_obj);
+top_x = info.Position(1);
+top_y = info.Position(2);
+set(handles.t_p_x,'String',num2str(top_x));
+set(handles.t_p_y,'String',num2str(top_y));
+
+
+
+function t_p_x_Callback(hObject, eventdata, handles)
+% hObject    handle to t_p_x (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of t_p_x as text
+%        str2double(get(hObject,'String')) returns contents of t_p_x as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function t_p_x_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to t_p_x (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function t_p_y_Callback(hObject, eventdata, handles)
+% hObject    handle to t_p_y (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of t_p_y as text
+%        str2double(get(hObject,'String')) returns contents of t_p_y as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function t_p_y_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to t_p_y (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function b_p_x_Callback(hObject, eventdata, handles)
+% hObject    handle to b_p_x (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of b_p_x as text
+%        str2double(get(hObject,'String')) returns contents of b_p_x as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function b_p_x_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to b_p_x (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+
+function b_p_y_Callback(hObject, eventdata, handles)
+% hObject    handle to b_p_y (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of b_p_y as text
+%        str2double(get(hObject,'String')) returns contents of b_p_y as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function b_p_y_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to b_p_y (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- Executes on button press in pushbutton7.
+function pushbutton7_Callback(hObject, eventdata, handles)
+% hObject    handle to pushbutton7 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+datacursormode on
+dcm_obj = datacursormode(handles.figure1);
+info = getCursorInfo(dcm_obj);
+buttom_x = info.Position(1);
+buttom_y = info.Position(2);
+set(handles.b_p_x,'String',num2str(buttom_x));
+set(handles.b_p_y,'String',num2str(buttom_y));
+
+
+
+% --- Executes on button press in generate_btn.
+function generate_btn_Callback(hObject, eventdata, handles)
+% hObject    handle to generate_btn (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+top_left_x = str2num(get(handles.t_p_x,'String'));
+top_left_y = str2num(get(handles.t_p_y,'String'));
+buttom_left_x = str2num(get(handles.b_p_x,'String'));
+buttom_left_y = str2num(get(handles.b_p_y,'String'));
+weight = buttom_left_x - top_left_x;
+height = buttom_left_y - top_left_y;
+axes(handles.axes_1);
+rectangle('Position',[top_left_x,top_left_y,weight,height],'EdgeColor', [1 0 0], 'Linewidth', 3);
+

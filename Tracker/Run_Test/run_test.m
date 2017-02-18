@@ -47,7 +47,7 @@ end
 
 %% Extract training examples
 % fprintf('  extract features...\n');
-set(handles.edit3,'String','extract features...\n');
+set(handles.edit3,'String','extract features...');
 pause(0.01);
 
 % draw positive/negative samples
@@ -73,7 +73,7 @@ neg_data = feat_conv(:,:,:,neg_idx);
 
 
 %% Learning CNN
-% fprintf('  training cnn...\n');
+% fprintf('  training cnn...');
 set(handles.edit3,'String',' training cnn...');
 pause(0.01);
 net_fc = mdnet_finetune_hnm(net_fc,pos_data,neg_data,opts,...
@@ -82,12 +82,12 @@ net_fc = mdnet_finetune_hnm(net_fc,pos_data,neg_data,opts,...
 % Initialize displayots
 if display
     %figure(2);
-    axes(handles.axes_1);
-    set(gcf,'Position',[200 100 600 400],'MenuBar','none','ToolBar','none');
+    axes(handles.axes_2);
+    %set(gcf,'Position',[200 100 600 400],'MenuBar','none','ToolBar','none');
     
     hd = imshow(img,'initialmagnification','fit'); hold on;
     rectangle('Position', targetLoc, 'EdgeColor', [1 0 0], 'Linewidth', 3);
-    set(gca,'position',[0 0 1 1]);
+    %set(gca,'position',[0 0 1 1]);
     
     text(10,10,'1','Color','y', 'HorizontalAlignment', 'left', 'FontWeight','bold', 'FontSize', 30);
     hold off;
@@ -119,8 +119,8 @@ scale_f = opts.scale_f;
 for To = 2:nFrames;
     %fprintf('Processing frame %d/%d... ', To, nFrames);
     msg = 'Processing frame ';
-    msg = [msg, int2str(To), int2str(nFrames),'...'];
-    set(handles.edit3,'String',msg);
+    msg = [msg, int2str(To), '/',int2str(nFrames),'...'];
+    %set(handles.edit3,'String',msg);
     pause(0.01);
     img = imread(images{To});
     if(size(img,3)==1), img = cat(3,img,img,img); end
@@ -205,19 +205,19 @@ for To = 2:nFrames;
     
     spf = toc(spf);
   %  fprintf('%f seconds\n',spf);
-  msg = [msg, int2str(spf),' seconds'];
+  msg = [msg, num2str(spf),' seconds'];
   set(handles.edit3,'String',msg);
   pause(0.01);
   
     
     %% Display
     if display
-        axes(handles.axes_1);
+        axes(handles.axes_2);
         hc = get(gca, 'Children'); delete(hc(1:end-1));
         set(hd,'cdata',img); hold on;
         
         rectangle('Position', result(To,:), 'EdgeColor', [1 0 0], 'Linewidth', 3);
-        set(gca,'position',[0 0 1 1]);
+        %set(gca,'position',[0 0 1 1]);
         
         text(10,10,num2str(To),'Color','y', 'HorizontalAlignment', 'left', 'FontWeight','bold', 'FontSize', 30); 
         hold off;
