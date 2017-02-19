@@ -22,7 +22,7 @@ function varargout = ui(varargin)
 
 % Edit the above text to modify the response to help ui
 
-% Last Modified by GUIDE v2.5 18-Feb-2017 22:32:13
+% Last Modified by GUIDE v2.5 19-Feb-2017 17:06:09
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -242,6 +242,20 @@ function slider2_Callback(hObject, eventdata, handles)
 
 % Hints: get(hObject,'Value') returns position of slider
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
+sliderValue = get(handles.slider2,'Value');
+if(sliderValue==0)
+    sliderValue=0.01;
+end
+imgs = handles.imgs;
+axes(handles.axes_2);
+imshow(imgs{int16(sliderValue)});
+result = handles.result;
+box = result(int16(sliderValue),:);
+
+rectangle('Position', box, 'EdgeColor', [1 0 0], 'Linewidth', 3);
+text(10,10,num2str(int16(sliderValue)),'Color','y', 'HorizontalAlignment', 'left', 'FontWeight','bold', 'FontSize', 30); 
+
+
 
 
 % --- Executes during object creation, after setting all properties.
@@ -266,6 +280,8 @@ imglist = handles.imgs;
 region = handles.region;
 net = fullfile('models','mdnet_otb-vot15.mat');
 result = run_test(handles,imglist, region, net, true);
+handles.result = result;
+guidata(hObject, handles);
 
 
 
@@ -587,15 +603,17 @@ rectangle('Position',region,'EdgeColor', [1 0 0], 'Linewidth', 3);
 
 
 % --------------------------------------------------------------------
-function Untitled_10_Callback(hObject, eventdata, handles)
-% hObject    handle to Untitled_10 (see GCBO)
+function upload_dir_btn_Callback(hObject, eventdata, handles)
+% hObject    handle to upload_dir_btn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 dir = uigetdir;
 handles.imgs = parseImg(dir);
+imgs = handles.imgs;
+[n,num_frame] = size(imgs);
+set(handles.slider2,'Max',num_frame);
 set(handles.filename,'String',dir);
 first_f = imread(handles.imgs{1});
 axes(handles.axes_1);
 imshow(first_f);
 guidata(hObject,handles);
-
