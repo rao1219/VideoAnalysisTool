@@ -244,7 +244,7 @@ function slider2_Callback(hObject, eventdata, handles)
 %        get(hObject,'Min') and get(hObject,'Max') to determine range of slider
 sliderValue = get(handles.slider2,'Value');
 if(sliderValue==0)
-    sliderValue=0.01;
+    sliderValue=1;
 end
 imgs = handles.imgs;
 axes(handles.axes_2);
@@ -461,6 +461,46 @@ function pushbutton5_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton5 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+try
+    handles.pausestart
+catch
+    handles.pausestart = 'pause';
+end
+if(strcmp(handles.pausestart,'start'))
+    handles.pausestart = 'pause';
+    guidata(hObject,handles);
+    uiwait;
+else
+    handles.pausestart = 'start';
+    curr_frame = get(handles.slider2,'Value');
+    %video_raw = VideoReader(handles.file_name);
+    
+    imgs = handles.imgs;
+    [m,n] = size(imgs);
+    axes(handles.axes_2);
+    result = handles.result;
+    space = 0.05;
+    
+    while(curr_frame <n)
+        if(handles.pausestart == 'pause')
+            uiwait;
+            break
+        end
+        if(curr_frame == 0)
+            curr_frame = 1;
+        end
+        imshow(imgs{int16(curr_frame)});
+        box = result(int16(curr_frame),:);
+        rectangle('Position', box, 'EdgeColor', [1 0 0], 'Linewidth', 3);
+        text(10,10,num2str(int16(curr_frame)),'Color','y', 'HorizontalAlignment', 'left', 'FontWeight','bold', 'FontSize', 30); 
+
+        set(handles.slider2,'Value',curr_frame);
+        curr_frame = curr_frame+1;
+        
+        guidata(hObject,handles);
+        pause(space);
+    end
+end
 
 
 % --- Executes on button press in set_posA_btn.
@@ -607,6 +647,7 @@ function upload_dir_btn_Callback(hObject, eventdata, handles)
 % hObject    handle to upload_dir_btn (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+set(handles.slider1,'Value',0.01);
 dir = uigetdir;
 handles.imgs = parseImg(dir);
 imgs = handles.imgs;
