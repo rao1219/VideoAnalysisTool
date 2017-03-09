@@ -330,7 +330,11 @@ function action_item_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 set(handles.edit3,'String','Action recognition');
-
+addpath('../action/Run_test/');
+addpath('../action/models/');
+pause(0.2);
+handles=guidata(hObject);
+tra_act(handles)
 
 % --------------------------------------------------------------------
 function caption_item_Callback(hObject, eventdata, handles)
