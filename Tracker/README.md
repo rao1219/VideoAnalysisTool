@@ -1,4 +1,4 @@
-### Adapted based on MDNet
+### Modified based on MDNet
 
 ## MDNet: Multi-Domain Convolutional Neural Network Tracker
 
